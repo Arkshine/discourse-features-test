@@ -3,113 +3,228 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Browser Feature Test</title>
+  <meta name="description" content="Discourse Feature Test - Check your browser's capabilities and information">
+  <title>Discourse Feature Test</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
   <style>
+    :root {
+      --primary-color: #333;
+      --secondary-color: #666;
+      --border-color: #ddd;
+      --success-bg: #d4edda;
+      --success-color: #155724;
+      --error-bg: #f8d7da;
+      --error-color: #721c24;
+      --code-bg: #f5f5f5;
+      --radius: 4px;
+      --spacing: 1em;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --primary-color: #e1e1e1;
+        --secondary-color: #b0b0b0;
+        --border-color: #444;
+        --success-bg: #1b4332;
+        --success-color: #95d5b2;
+        --error-bg: #3d1f2b;
+        --error-color: #f8d7da;
+        --code-bg: #2d2d2d;
+      }
+      body {
+        background-color: #1a1a1a;
+        color: var(--primary-color);
+      }
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
       max-width: 800px;
       margin: 0 auto;
-      padding: 2rem;
+      padding: var(--spacing);
       line-height: 1.6;
+      font-size: 16px;
     }
+
+    main {
+      display: grid;
+      gap: var(--spacing);
+    }
+
     h1 {
-      color: #333;
-      border-bottom: 2px solid #eee;
-      padding-bottom: 0.5rem;
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 0.5em;
+      margin-bottom: var(--spacing);
+      font-size: 2em;
     }
+
     .feature {
-      margin-bottom: 2rem;
-      padding: 1rem;
-      border: 1px solid #ddd;
-      border-radius: 4px;
+      margin-bottom: var(--spacing);
+      padding: var(--spacing);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      transition: box-shadow 0.3s ease;
     }
+
+    .feature:hover {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
     .feature h2 {
       margin-top: 0;
-      font-size: 1.2rem;
+      font-size: 1.2em;
+      color: var(--primary-color);
     }
+
     .result {
-      margin-top: 1rem;
+      margin-top: var(--spacing);
       padding: 0.5rem;
-      border-radius: 4px;
+      border-radius: var(--radius);
       font-weight: bold;
+      transition: background-color 0.3s ease;
     }
+
     .supported {
-      background-color: #d4edda;
-      color: #155724;
+      background-color: var(--success-bg);
+      color: var(--success-color);
     }
+
     .not-supported {
-      background-color: #f8d7da;
-      color: #721c24;
+      background-color: var(--error-bg);
+      color: var(--error-color);
     }
+
     code {
-      background-color: #f5f5f5;
+      background-color: var(--code-bg);
       padding: 0.2rem 0.4rem;
-      border-radius: 3px;
-      font-family: monospace;
+      border-radius: var(--radius);
+      font-family: 'Fira Code', 'Cascadia Code', Consolas, monospace;
       font-size: 0.9rem;
     }
+
     pre {
-      background-color: #f5f5f5;
-      padding: 1rem;
-      border-radius: 4px;
+      background-color: var(--code-bg);
+      padding: var(--spacing);
+      border-radius: var(--radius);
       overflow-x: auto;
     }
+
+    @media (max-width: 600px) {
+      body {
+        font-size: 14px;
+      }
+
+      .description {
+        display: none;
+      }
+    }
+
+    #browser {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      gap: 0.5rem 1.5rem;
+
+      .type {
+        font-size: medium;
+      }
+
+      .label {
+        display: inline-block;
+        line-height: 1;
+        vertical-align: baseline;
+        background-color: rgba(0, 0, 0, 0.1);
+        padding: 0.6em 0.8em;
+        color: rgba(0, 0, 0, 0.6);
+        text-transform: none;
+        font-weight: bold;
+        border-radius: 3px;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .label {
+          background-color: rgba(255, 255, 255, 0.1);
+          color: rgba(255, 255, 255, 0.6);
+        }
+      }
+    }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/ua-parser-js/dist/ua-parser.min.js"></script>
 </head>
 <body>
-  <h1>Browser Feature Test</h1>
+  <h1>Discourse Feature Test</h1>
+
+  <div class="feature">
+    <h2>Browser Information</h2>
+    <div id="browser">
+      <div class="column">
+        <div class="type">Browser</div>
+        <div class="header" id="browser-txt"></div>
+      </div>
+      <div class="column">
+          <div class="type">Engine</div>
+          <div class="header" id="engine-txt"></div>
+      </div>
+      <div class="column">
+          <div class="type">OS</div>
+          <div class="header" id="os-txt"></div>
+      </div>
+   </div>
+
+    <script>
+      (UAParser().withFeatureCheck()).withClientHints().then(result => {
+        const { browser, engine, os } = result;
+
+        const setUI = (selector, value) => document.getElementById(selector).innerHTML = value;
+
+        setUI('browser-txt', `<span class="label">${browser.name}</span> <span class="label">${browser.version ?? '-'}</span>`);
+        setUI('engine-txt', `<span class="label">${engine.name}</span> <span class="label">${engine.version ?? '-'}</span>`);
+        setUI('os-txt', `<span class="label">${os.name}</span> <span class="label">${os.version ?? '-'}</span>`);
+      })
+    </script>
+  </div>
   
-  <div class="feature" id="relative-color">
+  <div class="feature">
     <h2>Relative Color Syntax</h2>
-    <p>Tests if the browser supports: <code>hsl(from white h s l)</code></p>
+    <p class="description">Tests if the browser supports: <code>hsl(from white h s l)</code></p>
     <div class="result" id="relative-color-result"></div>
   </div>
   
-  <div class="feature" id="subgrid">
+  <div class="feature">
     <h2>CSS Subgrid</h2>
-    <p>Tests if the browser supports: <code>grid-template-rows: subgrid</code></p>
+    <p class="description">Tests if the browser supports: <code>grid-template-rows: subgrid</code></p>
     <div class="result" id="subgrid-result"></div>
   </div>
   
-  <div class="feature" id="lookbehind">
+  <div class="feature">
     <h2>JavaScript Lookbehind Regex</h2>
-    <p>Tests if the browser supports lookbehind in regular expressions: <code>(?<=a)b</code></p>
-    <pre>function supportsLookbehind() {
-  try {
-    return new RegExp("(?<=a)b").test("ab");
-  } catch {
-    return false;
-  }
-}</pre>
+    <p class="description">Tests if the browser supports lookbehind in regular expressions: <code>(?<=a)b</code></p>
     <div class="result" id="lookbehind-result"></div>
   </div>
 
   <script>
     // Test Relative Color Syntax
-    const relativeColorSupported = CSS.supports("(color: hsl(from white h s l))");
     const relativeColorResult = document.getElementById('relative-color-result');
-    relativeColorResult.textContent = relativeColorSupported ? "✅ Supported" : "❌ Not Supported";
-    relativeColorResult.className = relativeColorSupported ? "result supported" : "result not-supported";
+    relativeColorResult.textContent = CSS.supports("(color: hsl(from white h s l))") ? "✅ Supported" : "❌ Not Supported";
+    relativeColorResult.className = relativeColorResult.textContent.startsWith('✅') ? "result supported" : "result not-supported";
     
     // Test Subgrid
-    const subgridSupported = CSS.supports("(grid-template-rows: subgrid)");
     const subgridResult = document.getElementById('subgrid-result');
-    subgridResult.textContent = subgridSupported ? "✅ Supported" : "❌ Not Supported";
-    subgridResult.className = subgridSupported ? "result supported" : "result not-supported";
+    subgridResult.textContent = CSS.supports("(grid-template-rows: subgrid)") ? "✅ Supported" : "❌ Not Supported";
+    subgridResult.className = subgridResult.textContent.startsWith('✅') ? "result supported" : "result not-supported";
     
     // Test Lookbehind Regex
-    function supportsLookbehind() {
+    const lookbehindSupported = (() => {
       try {
         return new RegExp("(?<=a)b").test("ab");
       } catch {
         return false;
       }
-    }
-    
-    const lookbehindSupported = supportsLookbehind();
+    })();
     const lookbehindResult = document.getElementById('lookbehind-result');
     lookbehindResult.textContent = lookbehindSupported ? "✅ Supported" : "❌ Not Supported";
-    lookbehindResult.className = lookbehindSupported ? "result supported" : "result not-supported";
+    lookbehindResult.className = lookbehindResult.textContent.startsWith('✅') ? "result supported" : "result not-supported";
   </script>
 </body>
 </html>
