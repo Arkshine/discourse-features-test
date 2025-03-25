@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Discourse Feature Test - Check your browser's capabilities and information">
   <title>Discourse Feature Test</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
   <style>
     :root {
       --primary-color: #333;
@@ -31,6 +33,7 @@
         --error-color: #f8d7da;
         --code-bg: #2d2d2d;
       }
+
       body {
         background-color: #1a1a1a;
         color: var(--primary-color);
@@ -68,7 +71,7 @@
     }
 
     .feature:hover {
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     .feature h2 {
@@ -132,33 +135,34 @@
       flex-wrap: wrap;
       flex-direction: row;
       gap: 0.5rem 1.5rem;
+    }
 
-      .type {
-        font-size: medium;
-      }
+    #browser .type {
+      font-size: medium;
+    }
 
-      .label {
-        display: inline-block;
-        line-height: 1;
-        vertical-align: baseline;
-        background-color: rgba(0, 0, 0, 0.1);
-        padding: 0.6em 0.8em;
-        color: rgba(0, 0, 0, 0.6);
-        text-transform: none;
-        font-weight: bold;
-        border-radius: 3px;
-      }
+    #browser .label {
+      display: inline-block;
+      line-height: 1;
+      vertical-align: baseline;
+      background-color: rgba(0, 0, 0, 0.1);
+      padding: 0.6em 0.8em;
+      color: rgba(0, 0, 0, 0.6);
+      text-transform: none;
+      font-weight: bold;
+      border-radius: 3px;
+    }
 
-      @media (prefers-color-scheme: dark) {
-        .label {
-          background-color: rgba(255, 255, 255, 0.1);
-          color: rgba(255, 255, 255, 0.6);
-        }
+    @media (prefers-color-scheme: dark) {
+      #browser .label {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.6);
       }
     }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/ua-parser-js/dist/ua-parser.min.js"></script>
 </head>
+
 <body>
   <h1>Discourse Feature Test</h1>
 
@@ -170,14 +174,14 @@
         <div class="header" id="browser-txt"></div>
       </div>
       <div class="column">
-          <div class="type">Engine</div>
-          <div class="header" id="engine-txt"></div>
+        <div class="type">Engine</div>
+        <div class="header" id="engine-txt"></div>
       </div>
       <div class="column">
-          <div class="type">OS</div>
-          <div class="header" id="os-txt"></div>
+        <div class="type">OS</div>
+        <div class="header" id="os-txt"></div>
       </div>
-   </div>
+    </div>
 
     <script>
       (UAParser().withFeatureCheck()).withClientHints().then(result => {
@@ -191,19 +195,19 @@
       })
     </script>
   </div>
-  
+
   <div class="feature">
     <h2>Relative Color Syntax</h2>
     <p class="description">Tests if the browser supports: <code>hsl(from white h s l)</code></p>
     <div class="result" id="relative-color-result"></div>
   </div>
-  
+
   <div class="feature">
     <h2>CSS Subgrid</h2>
     <p class="description">Tests if the browser supports: <code>grid-template-rows: subgrid</code></p>
     <div class="result" id="subgrid-result"></div>
   </div>
-  
+
   <div class="feature">
     <h2>JavaScript Lookbehind Regex</h2>
     <p class="description">Tests if the browser supports lookbehind in regular expressions: <code>(?<=a)b</code></p>
@@ -215,12 +219,12 @@
     const relativeColorResult = document.getElementById('relative-color-result');
     relativeColorResult.textContent = CSS.supports("(color: hsl(from white h s l))") ? "✅ Supported" : "❌ Not Supported";
     relativeColorResult.className = relativeColorResult.textContent.startsWith('✅') ? "result supported" : "result not-supported";
-    
+
     // Test Subgrid
     const subgridResult = document.getElementById('subgrid-result');
     subgridResult.textContent = CSS.supports("(grid-template-rows: subgrid)") ? "✅ Supported" : "❌ Not Supported";
     subgridResult.className = subgridResult.textContent.startsWith('✅') ? "result supported" : "result not-supported";
-    
+
     // Test Lookbehind Regex
     const lookbehindSupported = (() => {
       try {
@@ -234,4 +238,5 @@
     lookbehindResult.className = lookbehindResult.textContent.startsWith('✅') ? "result supported" : "result not-supported";
   </script>
 </body>
+
 </html>
