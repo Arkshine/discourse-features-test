@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Browser Font Size Diagnostics</title>
+    <title>Browser font size diagnostics</title>
     <style>
       :root {
         --primary: #006699;
@@ -62,23 +62,6 @@
         margin-bottom: 1.5rem;
         border: 1px solid var(--border);
       }
-      .card h2,
-      .card h3 {
-        margin-top: 0;
-        color: var(--primary);
-        border-bottom: 1px solid var(--border);
-        padding-bottom: 0.5rem;
-        margin-bottom: 1rem;
-      }
-      .card h2 {
-        font-size: 1.25rem;
-      }
-      .card h3 {
-        font-size: 1.1rem;
-        border-bottom: none;
-        padding-bottom: 0;
-        margin-bottom: 0.5rem;
-      }
       .info-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -99,59 +82,6 @@
         color: var(--text);
         font-weight: 500;
       }
-      .font-example {
-        padding: 1rem;
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        margin-bottom: 1rem;
-      }
-      .text-xs {
-        font-size: 0.75rem;
-      }
-      .text-sm {
-        font-size: 0.875rem;
-      }
-      .text-base {
-        font-size: 1rem;
-      }
-      .text-lg {
-        font-size: 1.125rem;
-      }
-      .text-xl {
-        font-size: 1.25rem;
-      }
-      .text-2xl {
-        font-size: 1.5rem;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      table th,
-      table td {
-        padding: 0.75rem;
-        text-align: left;
-        border-bottom: 1px solid var(--border);
-      }
-      table th {
-        font-weight: 500;
-        color: var(--text-light);
-      }
-      .refresh-btn {
-        display: inline-block;
-        padding: var(--padding-btn);
-        background: var(--primary);
-        color: #fff;
-
-        border-radius: 4px;
-        font-weight: 500;
-        text-decoration: none;
-
-        margin-top: 1rem;
-        border: none;
-        cursor: pointer;
-        transition: background 0.2s;
-      }
       .toggle-darkmode-wrapper {
         max-height: 1000px;
         position: relative;
@@ -161,24 +91,19 @@
         top: -1rem;
         right: 1rem;
         z-index: 1000;
-
         width: 36px;
         height: 36px;
-
         background: rgba(0, 0, 0, 0.05);
         border-radius: 50%;
         border: none;
         box-shadow: none;
-
         display: flex;
         align-items: center;
         justify-content: center;
-
         padding: 0;
         min-width: 0;
         margin: 0;
         color: var(--primary);
-
         opacity: 0.7;
         transition: background 0.2s, opacity 0.2s;
       }
@@ -188,7 +113,19 @@
         opacity: 1;
         outline: none;
       }
-
+      .refresh-btn {
+        display: inline-block;
+        padding: var(--padding-btn);
+        background: var(--primary);
+        color: #fff;
+        border-radius: 4px;
+        font-weight: 500;
+        text-decoration: none;
+        margin-top: 1rem;
+        border: none;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
       .refresh-btn:hover {
         background: #4338ca;
       }
@@ -201,48 +138,31 @@
     </style>
   </head>
   <body>
-    <div class="container" x-data="diagnostics" x-init="init()">
+    <div class="container">
       <div class="toggle-darkmode-wrapper">
         <button
           class="toggle-darkmode"
-          @click="darkMode = !darkMode"
-          :aria-pressed="darkMode"
-          :class="darkMode ? 'active' : ''"
-          :aria-label="darkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+          id="darkModeBtn"
+          aria-pressed="false"
+          aria-label="Switch to dark mode"
         >
-          <template x-if="!darkMode">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <circle cx="12" cy="12" r="5" />
-              <path
-                d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
-              />
-            </svg>
-          </template>
-          <template x-if="darkMode">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" />
-            </svg>
-          </template>
+          <svg
+            id="darkModeIcon"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="5" />
+            <path
+              d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+            />
+          </svg>
         </button>
       </div>
       <header>
@@ -253,365 +173,155 @@
           discrepancies.
         </p>
       </header>
-
       <div class="card">
         <h2>Browser Information</h2>
         <div class="info-grid">
           <div class="info-item">
-            <span class="info-label">Browser</span>
-            <span class="info-value" x-text="browserName"></span>
+            <span class="info-label">Browser</span
+            ><span class="info-value" id="browserName"></span>
           </div>
           <div class="info-item">
-            <span class="info-label">Version</span>
-            <span class="info-value" x-text="browserVersion"></span>
+            <span class="info-label">Version</span
+            ><span class="info-value" id="browserVersion"></span>
           </div>
           <div class="info-item">
-            <span class="info-label">Platform</span>
-            <span class="info-value" x-text="platform"></span>
+            <span class="info-label">Platform</span
+            ><span class="info-value" id="platform"></span>
           </div>
           <div class="info-item">
-            <span class="info-label">User Agent</span>
-            <span
+            <span class="info-label">User Agent</span
+            ><span
               class="info-value"
               style="font-size: 0.8rem; word-break: break-all"
-              x-text="userAgent"
+              id="userAgent"
             ></span>
           </div>
         </div>
       </div>
-
       <div class="card">
         <h2>Display Properties</h2>
         <div class="info-grid">
           <div class="info-item">
-            <span class="info-label">Device Pixel Ratio</span>
-            <span class="info-value" x-text="pixelRatio"></span>
+            <span class="info-label">Device Pixel Ratio</span
+            ><span class="info-value" id="pixelRatio"></span>
           </div>
           <div class="info-item">
-            <span class="info-label">Viewport Width</span>
-            <span class="info-value" x-text="viewportWidth"></span>
+            <span class="info-label">Viewport Width</span
+            ><span class="info-value" id="viewportWidth"></span>
           </div>
           <div class="info-item">
-            <span class="info-label">Viewport Height</span>
-            <span class="info-value" x-text="viewportHeight"></span>
+            <span class="info-label">Viewport Height</span
+            ><span class="info-value" id="viewportHeight"></span>
           </div>
           <div class="info-item">
-            <span class="info-label">Zoom Level (Estimated)</span>
-            <span class="info-value" x-text="zoomLevel"></span>
+            <span class="info-label">Zoom Level (Estimated)</span
+            ><span class="info-value" id="zoomLevel"></span>
           </div>
         </div>
       </div>
-
       <div class="card">
         <h2>Default Font Settings</h2>
         <div class="info-grid">
           <div class="info-item">
-            <span class="info-label">Default Font Size</span>
-            <span class="info-value" x-text="defaultFontSize"></span>
-          </div>
-          <div class="info-item">
-            <span class="info-label">Default Font Family</span>
-            <span class="info-value" x-text="defaultFontFamily"></span>
-          </div>
-          <div class="info-item">
             <span class="info-label">Root Font Size (&lt;html&gt;)</span>
-            <span class="info-value" x-text="rootFontSize"></span>
+            <span class="info-value" id="rootFontSize"></span>
           </div>
           <div class="info-item">
             <span class="info-label">Body Font Size</span>
-            <span class="info-value" x-text="bodyFontSize"></span>
+            <span class="info-value" id="bodyFontSize"></span>
           </div>
           <div class="info-item">
             <span class="info-label">Body Line Height</span>
-            <span class="info-value" x-text="bodyLineHeight"></span>
+            <span class="info-value" id="bodyLineHeight"></span>
           </div>
           <div class="info-item">
             <span class="info-label">Body Letter Spacing</span>
-            <span class="info-value" x-text="bodyLetterSpacing"></span>
+            <span class="info-value" id="bodyLetterSpacing"></span>
           </div>
           <div class="info-item">
-            <span class="info-label">HTML Font Size</span>
-            <span class="info-value" x-text="htmlFontSize"></span>
+            <span class="info-label">DPI/PPI (Estimate)</span>
+            <span class="info-value" id="dpiEstimate"></span>
           </div>
           <div class="info-item">
-            <span class="info-label">Zoom Ratio (Actual)</span>
-            <span class="info-value" x-text="zoomRatio"></span>
-          </div>
-          <div class="info-item">
-            <span class="info-label">DPI/PPI Estimate</span>
-            <span class="info-value" x-text="dpi"></span>
-          </div>
-          <div class="info-item">
-            <span class="info-label">Font Smoothing</span>
-            <span class="info-value" x-text="fontSmoothing"></span>
-          </div>
-          <div class="info-item">
-            <span class="info-label">Fallback Font Used</span>
-            <span class="info-value" x-text="fallbackFont"></span>
-          </div>
-          <div class="info-item">
-            <span class="info-label">1rem in px</span>
-            <span class="info-value" x-text="remPx"></span>
-          </div>
-          <div class="info-item">
-            <span class="info-label">1vw in px</span>
-            <span class="info-value" x-text="vwPx"></span>
-          </div>
-          <div class="info-item">
-            <span class="info-label">1vh in px</span>
-            <span class="info-value" x-text="vhPx"></span>
-          </div>
-          <div class="info-item">
-            <span class="info-label">Text/Background Contrast</span>
-            <span class="info-value" x-text="contrast"></span>
+            <span class="info-label">1rem / 1vw / 1vh</span>
+            <span class="info-value" id="viewportUnits"></span>
           </div>
         </div>
       </div>
-
-      <div class="card">
-        <h2>Font Size Examples</h2>
-
-        <div class="font-example">
-          <p class="text-xs">This is xs text (0.75rem / 12px)</p>
-          <p class="text-sm">This is sm text (0.875rem / 14px)</p>
-          <p class="text-base">This is base text (1rem / 16px)</p>
-          <p class="text-lg">This is lg text (1.125rem / 18px)</p>
-          <p class="text-xl">This is xl text (1.25rem / 20px)</p>
-          <p class="text-2xl">This is 2xl text (1.5rem / 24px)</p>
-        </div>
-
-        <div>
-          <h3>Font Metrics</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Element</th>
-                <th>Computed Size</th>
-                <th>Client Height</th>
-                <th>Offset Height</th>
-              </tr>
-            </thead>
-            <tbody>
-              <template x-for="metric in fontMetrics" :key="metric.name">
-                <tr>
-                  <td x-text="metric.name"></td>
-                  <td x-text="metric.fontSize"></td>
-                  <td x-text="metric.clientHeight"></td>
-                  <td x-text="metric.offsetHeight"></td>
-                </tr>
-              </template>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <button class="refresh-btn" @click="location.reload()">
-        Refresh Data
-      </button>
-
-      <footer>
-        <p>
-          Take screenshots of this page in different browsers to compare results
-          side by side.
-        </p>
-      </footer>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/ua-parser-js/dist/ua-parser.min.js"></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
-      defer
-    ></script>
     <script>
-      document.addEventListener("alpine:init", () => {
-        Alpine.data("diagnostics", () => ({
-          browserName: "Loading...",
-          browserVersion: "Loading...",
-          platform: "Loading...",
-          userAgent: "Loading...",
-          pixelRatio: "Loading...",
-          viewportWidth: "Loading...",
-          viewportHeight: "Loading...",
-          zoomLevel: "Loading...",
-          fontMetrics: [],
-          defaultFontSize: "Loading...",
-          defaultFontFamily: "Loading...",
-          darkMode: false,
-          rootFontSize: "",
-          bodyFontSize: "",
-          bodyLineHeight: "",
-          bodyLetterSpacing: "",
-          htmlFontSize: "",
-          zoomRatio: "",
-          dpi: "",
-          fontSmoothing: "",
-          fallbackFont: "",
-          remPx: "",
-          vwPx: "",
-          vhPx: "",
-          contrast: "",
-
-          updateViewport() {
-            this.viewportWidth = window.innerWidth + "px";
-            this.viewportHeight = window.innerHeight + "px";
-            this.zoomLevel =
-              "~" + Math.round(window.devicePixelRatio * 100) + "%";
-          },
-
-          updateFontMetrics() {
-            const metrics = [
-              { selector: ".text-xs", name: "Extra Small (xs)" },
-              { selector: ".text-sm", name: "Small (sm)" },
-              { selector: ".text-base", name: "Base" },
-              { selector: ".text-lg", name: "Large (lg)" },
-              { selector: ".text-xl", name: "Extra Large (xl)" },
-              { selector: ".text-2xl", name: "2XL" },
-            ];
-            this.fontMetrics = metrics.map(({ selector, name }) => {
-              const el = document.querySelector(selector);
-              const style = window.getComputedStyle(el);
-
-              return {
-                name,
-                fontSize: style.fontSize,
-                clientHeight: el.clientHeight + "px",
-                offsetHeight: el.offsetHeight + "px",
-              };
-            });
-          },
-
-          updateDefaultFont() {
-            const div = document.createElement("div");
-            div.style.fontFamily = "serif,monospace,sans-serif";
-            div.style.fontSize = "16px";
-            div.textContent = "A";
-            document.body.appendChild(div);
-
-            const style = window.getComputedStyle(div);
-            this.defaultFontSize = style.fontSize;
-            this.defaultFontFamily = style.fontFamily;
-            this.fallbackFont = style.fontFamily.split(",")[0];
-
-            document.body.removeChild(div);
-
-            this.rootFontSize = window.getComputedStyle(
-              document.documentElement
-            ).fontSize;
-            this.bodyFontSize = window.getComputedStyle(document.body).fontSize;
-            this.bodyLineHeight = window.getComputedStyle(
-              document.body
-            ).lineHeight;
-            this.bodyLetterSpacing = window.getComputedStyle(
-              document.body
-            ).letterSpacing;
-
-            this.htmlFontSize =
-              document.documentElement.style.fontSize ||
-              window.getComputedStyle(document.documentElement).fontSize;
-            this.remPx =
-              parseFloat(getComputedStyle(document.documentElement).fontSize) +
-              "px";
-
-            this.vwPx = window.innerWidth / 100 + "px";
-            this.vhPx = window.innerHeight / 100 + "px";
-            this.zoomRatio =
-              window.outerWidth && window.innerWidth
-                ? (window.outerWidth / window.innerWidth).toFixed(2)
-                : "";
-
-            const dpiDiv = document.createElement("div");
-            dpiDiv.style.width = "1in";
-            dpiDiv.style.position = "absolute";
-            document.body.appendChild(dpiDiv);
-            this.dpi = Math.round(dpiDiv.offsetWidth) + " dpi";
-            document.body.removeChild(dpiDiv);
-
-            let smoothing = "";
-            if ("fontSmoothingEnabled" in window.screen) {
-              smoothing = window.screen.fontSmoothingEnabled
-                ? "enabled"
-                : "none";
-            } else if (
-              window.getComputedStyle(document.body).webkitFontSmoothing
-            ) {
-              smoothing = window.getComputedStyle(
-                document.body
-              ).webkitFontSmoothing;
-            }
-
-            this.fontSmoothing = smoothing || "unknown";
-
-            const bg = getComputedStyle(document.body).backgroundColor;
-            const fg = getComputedStyle(document.body).color;
-
-            function rgb2lum(c) {
-              let a = c.match(/\d+/g).map(Number);
-
-              a = a.map(function (v, i) {
-                v = v / 255;
-
-                return v <= 0.03928
-                  ? v / 12.92
-                  : Math.pow((v + 0.055) / 1.055, 2.4);
-              });
-
-              return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
-            }
-
-            function contrastRatio(bg, fg) {
-              const l1 = rgb2lum(bg);
-              const l2 = rgb2lum(fg);
-              const ratio =
-                (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
-
-              return ratio.toFixed(2);
-            }
-
-            this.contrast = contrastRatio(bg, fg);
-          },
-
-          init() {
-            const parser = new UAParser();
-            const result = parser.getResult();
-
-            this.browserName = result.browser.name || "Unknown";
-            this.browserVersion = result.browser.version || "";
-            this.platform = result.os.name
-              ? result.os.name +
-                (result.os.version ? " " + result.os.version : "")
-              : navigator.platform;
-            this.userAgent = navigator.userAgent;
-            this.pixelRatio = window.devicePixelRatio;
-
-            if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-              this.darkMode = true;
-            }
-
-            const setBodyClass = (val) =>
-              document.documentElement.setAttribute(
-                "data-theme",
-                val ? "dark" : "light"
-              );
-
-            this.$watch("darkMode", setBodyClass);
-            setBodyClass();
-
-            this.updateViewport();
-            this.updateFontMetrics();
-            this.updateDefaultFont();
-
-            window.addEventListener("resize", () => {
-              this.updateViewport();
-            });
-
-            window.addEventListener("orientationchange", () => {
-              this.updateViewport();
-              this.updateFontMetrics();
-              this.updateDefaultFont();
-            });
-          },
-        }));
+      function updateDiagnostics() {
+        const parser = new UAParser();
+        const result = parser.getResult();
+        document.getElementById("browserName").textContent =
+          result.browser.name || "Unknown";
+        document.getElementById("browserVersion").textContent =
+          result.browser.version || "";
+        document.getElementById("platform").textContent = result.os.name
+          ? result.os.name + (result.os.version ? " " + result.os.version : "")
+          : navigator.platform;
+        document.getElementById("userAgent").textContent = navigator.userAgent;
+        document.getElementById("pixelRatio").textContent =
+          window.devicePixelRatio;
+        document.getElementById("viewportWidth").textContent =
+          window.innerWidth + "px";
+        document.getElementById("viewportHeight").textContent =
+          window.innerHeight + "px";
+        document.getElementById("zoomLevel").textContent =
+          "~" + Math.round(window.devicePixelRatio * 100) + "%";
+        document.getElementById("rootFontSize").textContent = getComputedStyle(
+          document.documentElement
+        ).fontSize;
+        document.getElementById("bodyFontSize").textContent = getComputedStyle(
+          document.body
+        ).fontSize;
+        document.getElementById("bodyLineHeight").textContent =
+          getComputedStyle(document.body).lineHeight;
+        document.getElementById("bodyLetterSpacing").textContent =
+          getComputedStyle(document.body).letterSpacing;
+        // DPI/PPI estimate
+        const dpi = window.devicePixelRatio * 96;
+        document.getElementById("dpiEstimate").textContent =
+          Math.round(dpi) + " dpi";
+        // Viewport units comparison
+        const rem = parseFloat(
+          getComputedStyle(document.documentElement).fontSize
+        );
+        const vw = window.innerWidth / 100;
+        const vh = window.innerHeight / 100;
+        document.getElementById(
+          "viewportUnits"
+        ).textContent = `${rem}px / ${vw.toFixed(2)}px / ${vh.toFixed(2)}px`;
+      }
+      document.addEventListener("DOMContentLoaded", updateDiagnostics);
+      window.addEventListener("resize", updateDiagnostics);
+      window.addEventListener("orientationchange", updateDiagnostics);
+      // Dark mode button
+      const btn = document.getElementById("darkModeBtn");
+      const icon = document.getElementById("darkModeIcon");
+      let darkMode = false;
+      function setTheme(dark) {
+        document.documentElement.setAttribute(
+          "data-theme",
+          dark ? "dark" : "light"
+        );
+        btn.setAttribute("aria-pressed", dark);
+        btn.setAttribute(
+          "aria-label",
+          dark ? "Switch to light mode" : "Switch to dark mode"
+        );
+        icon.innerHTML = dark
+          ? '<path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/>'
+          : '<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>';
+      }
+      btn.addEventListener("click", function () {
+        darkMode = !darkMode;
+        setTheme(darkMode);
       });
+      // Set initial theme
+      darkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      setTheme(darkMode);
     </script>
   </body>
 </html>
