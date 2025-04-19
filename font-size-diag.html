@@ -142,27 +142,53 @@
         padding: var(--padding-btn);
         background: var(--primary);
         color: #fff;
+
         border-radius: 4px;
         font-weight: 500;
         text-decoration: none;
+
         margin-top: 1rem;
         border: none;
         cursor: pointer;
         transition: background 0.2s;
       }
+      .toggle-darkmode-wrapper {
+        max-height: 1000px;
+        position: relative;
+      }
       .toggle-darkmode {
         position: absolute;
-        top: 1rem;
+        top: -1rem;
         right: 1rem;
-        width: 44px;
-        height: 44px;
+        z-index: 1000;
+
+        width: 36px;
+        height: 36px;
+
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 50%;
+        border: none;
+        box-shadow: none;
+
         display: flex;
         align-items: center;
         justify-content: center;
+
         padding: 0;
         min-width: 0;
-        margin-top: 0;
+        margin: 0;
+        color: var(--primary);
+
+        opacity: 0.7;
+        transition: background 0.2s, opacity 0.2s;
       }
+      .toggle-darkmode:hover,
+      .toggle-darkmode:focus {
+        background: rgba(0, 0, 0, 0.1);
+        opacity: 1;
+        outline: none;
+      }
+
       .refresh-btn:hover {
         background: #4338ca;
       }
@@ -176,9 +202,9 @@
   </head>
   <body>
     <div class="container" x-data="diagnostics" x-init="init()">
-      <header style="position: relative">
+      <div class="toggle-darkmode-wrapper">
         <button
-          class="refresh-btn toggle-darkmode"
+          class="toggle-darkmode"
           @click="darkMode = !darkMode"
           :aria-pressed="darkMode"
           :class="darkMode ? 'active' : ''"
@@ -186,8 +212,8 @@
         >
           <template x-if="!darkMode">
             <svg
-              width="24"
-              height="24"
+              width="20"
+              height="20"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -204,8 +230,8 @@
           </template>
           <template x-if="darkMode">
             <svg
-              width="24"
-              height="24"
+              width="20"
+              height="20"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -218,6 +244,8 @@
             </svg>
           </template>
         </button>
+      </div>
+      <header>
         <h1>Browser Font Size Diagnostics</h1>
         <p class="description">
           This tool helps diagnose differences in font rendering and sizing
@@ -574,6 +602,12 @@
 
             window.addEventListener("resize", () => {
               this.updateViewport();
+            });
+
+            window.addEventListener("orientationchange", () => {
+              this.updateViewport();
+              this.updateFontMetrics();
+              this.updateDefaultFont();
             });
           },
         }));
